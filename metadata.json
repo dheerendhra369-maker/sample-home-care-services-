@@ -1,0 +1,7 @@
+{
+  "name": "SilverCare AI",
+  "description": "A comprehensive home care platform for the elderly, featuring AI-driven care planning, service booking, and health monitoring.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
