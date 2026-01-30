@@ -58,8 +58,8 @@ const AICareAssistant: React.FC<AICareAssistantProps> = ({ onClose }) => {
       {/* Header */}
       <div className="p-4 md:p-5 border-b border-slate-100 bg-[#0A2540] text-white flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#39D428] rounded-full flex items-center justify-center text-white text-xl shadow-inner border-2 border-white/10">
-            🤖
+          <div className="w-10 h-10 bg-[#39D428] rounded-full flex items-center justify-center text-white shadow-inner border-2 border-white/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="8" width="16" height="12" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg>
           </div>
           <div>
             <h3 className="font-bold text-sm md:text-base leading-tight">Care Assistant</h3>
@@ -73,7 +73,7 @@ const AICareAssistant: React.FC<AICareAssistantProps> = ({ onClose }) => {
               className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/10 active:bg-white/20 transition-colors text-white/70 hover:text-white"
               aria-label="Close Chat"
             >
-              <span className="text-xl">✕</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           )}
         </div>

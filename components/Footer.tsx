@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
               <div className="w-10 h-10 bg-[#39D428] rounded-lg flex items-center justify-center text-white text-xl font-bold shadow-lg">H</div>
               <div className="flex flex-col">
                 <span className="text-md font-bold leading-tight">Home Care</span>
-                <span className="text-[8px] uppercase tracking-widest text-[#39D428] font-semibold">For The Elderly</span>
+                <span className="text-[8px] uppercase tracking-widest text-[#39D428] font-semibold">Services For The Elderly</span>
               </div>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-3 md:space-y-4 text-sm font-medium text-slate-400">
               <li><a href="#" className="hover:text-white transition-colors">My Dashboard</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Care Services</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Care Calendar</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Emergency SOS</a></li>
             </ul>
           </div>
