@@ -1,6 +1,6 @@
 {
-  "name": "SilverCare AI",
-  "description": "A comprehensive home care platform for the elderly, featuring AI-driven care planning, service booking, and health monitoring.",
+  "name": "Home Care Services for the Elderly",
+  "description": "A comprehensive home care platform for the elderly, featuring personalized care planning, service booking, and health monitoring.",
   "requestFramePermissions": [
     "geolocation"
   ]

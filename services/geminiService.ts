@@ -12,7 +12,7 @@ export const getCareAdvice = async (userPrompt: string, history: { role: 'user' 
         { role: 'user', parts: [{ text: userPrompt }] }
       ],
       config: {
-        systemInstruction: `You are SilverCare AI, a professional, empathetic, and highly knowledgeable assistant for elderly home care. 
+        systemInstruction: `You are the Home Care Services Assistant, a professional, empathetic, and highly knowledgeable assistant for elderly home care. 
         Your goals:
         1. Answer health-related questions with caution (always recommend consulting a doctor).
         2. Help families understand care options (nursing, companionship, personal care).
@@ -37,7 +37,7 @@ export const generateCarePlan = async (details: string) => {
       contents: `Generate a sample 7-day home care plan based on the following needs: ${details}. 
       Include morning, afternoon, and evening blocks. Focus on dignity, health, and social engagement.`,
       config: {
-        systemInstruction: "You are a professional geriatric care manager.",
+        systemInstruction: "You are a professional geriatric care manager for home care services.",
         temperature: 0.5,
       }
     });

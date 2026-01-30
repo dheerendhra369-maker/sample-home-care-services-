@@ -5,7 +5,7 @@ import { ChatMessage } from '../types';
 
 const AICareAssistant: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: '1', role: 'model', text: 'Hello! I am your SilverCare Assistant. How can I help you or your loved ones today?', timestamp: new Date() }
+    { id: '1', role: 'model', text: 'Hello! I am your Care Assistant. How can I help you or your loved ones today?', timestamp: new Date() }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -54,11 +54,11 @@ const AICareAssistant: React.FC = () => {
       {/* Header */}
       <div className="p-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xl">
+          <div className="w-10 h-10 bg-[#39D428] rounded-full flex items-center justify-center text-white text-xl">
             🤖
           </div>
           <div>
-            <h3 className="font-bold text-slate-800">SilverCare AI</h3>
+            <h3 className="font-bold text-slate-800">Care Assistant</h3>
             <p className="text-xs text-emerald-600 font-medium">Online & Ready to Help</p>
           </div>
         </div>
@@ -79,7 +79,7 @@ const AICareAssistant: React.FC = () => {
           >
             <div className={`max-w-[80%] p-4 rounded-2xl ${
               msg.role === 'user' 
-                ? 'bg-indigo-600 text-white rounded-br-none' 
+                ? 'bg-[#39D428] text-white rounded-br-none' 
                 : 'bg-slate-100 text-slate-800 rounded-bl-none'
             }`}>
               <div className="text-sm prose prose-slate">
@@ -109,20 +109,20 @@ const AICareAssistant: React.FC = () => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Type your question here (e.g., 'How to prevent falls?')"
-            className="flex-1 p-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all"
+            className="flex-1 p-3 rounded-xl bg-slate-50 border border-slate-200 text-[#0A2540] font-medium focus:outline-none focus:ring-2 focus:ring-[#39D428] focus:bg-white transition-all placeholder:text-slate-400"
           />
           <button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
-            className="bg-indigo-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
+            className="bg-[#39D428] text-white px-6 py-2 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-[#2BA11E] transition-colors disabled:opacity-50"
           >
             Send
           </button>
         </div>
         <p className="text-[10px] text-slate-400 mt-2 text-center">
-          Information provided by SilverCare AI is for informational purposes. Always consult a medical professional for health emergencies.
+          Information provided is for informational purposes. Always consult a medical professional for health emergencies.
         </p>
       </div>
     </div>

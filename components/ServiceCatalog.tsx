@@ -3,118 +3,137 @@ import React, { useState } from 'react';
 import { ServiceType } from '../types';
 
 interface ServiceItem {
-  type: ServiceType;
+  id: string;
+  category: 'Health' | 'Concierge' | 'Emergency' | 'Social';
   title: string;
   description: string;
   icon: string;
-  price: string;
-  color: string;
+  features: string[];
 }
 
-const SERVICES: ServiceItem[] = [
-  { type: ServiceType.PERSONAL_CARE, title: 'Personal Care', description: 'Assistance with bathing, dressing, and daily hygiene tasks.', icon: '🧼', price: 'From $25/hr', color: 'bg-blue-50 text-blue-600' },
-  { type: ServiceType.NURSING, title: 'Skilled Nursing', description: 'Medical care provided by registered nurses (wound care, meds).', icon: '🩺', price: 'From $65/hr', color: 'bg-emerald-50 text-emerald-600' },
-  { type: ServiceType.COMPANIONSHIP, title: 'Companionship', description: 'Emotional support and social engagement for seniors.', icon: '🤝', price: 'From $20/hr', color: 'bg-amber-50 text-amber-600' },
-  { type: ServiceType.MEALS, title: 'Meal Preparation', description: 'Custom nutritional meal planning and cooking at home.', icon: '🍲', price: 'From $30/hr', color: 'bg-rose-50 text-rose-600' },
-  { type: ServiceType.TRANSPORT, title: 'Transportation', description: 'Safe rides to doctors, grocery shopping, and social events.', icon: '🚗', price: 'From $15/trip', color: 'bg-indigo-50 text-indigo-600' },
-  { type: ServiceType.CHORES, title: 'Light Housekeeping', description: 'Maintaining a clean and safe home environment.', icon: '🧹', price: 'From $22/hr', color: 'bg-slate-50 text-slate-600' },
+const CATEGORIES = [
+  { id: 'Health', icon: '🩺' },
+  { id: 'Concierge', icon: '🛍️' },
+  { id: 'Emergency', icon: '🆘' },
+  { id: 'Social', icon: '🤝' },
+];
+
+const DETAILED_SERVICES: ServiceItem[] = [
+  { 
+    id: 'h1', 
+    category: 'Health', 
+    title: 'Nursing & Physio', 
+    description: 'Specialized at-home medical support for chronic conditions or post-surgery recovery.', 
+    icon: '👩‍⚕️',
+    features: ['Wound dressing', 'IV fluid mgmt', 'Mobility training']
+  },
+  { 
+    id: 'c1', 
+    category: 'Concierge', 
+    title: 'Elder Concierge', 
+    description: 'Personalized assistance for daily errands, utility bill payments, and banking support.', 
+    icon: '👤',
+    features: ['Grocery shopping', 'Banking tasks', 'Home maintenance']
+  },
+  { 
+    id: 'e1', 
+    category: 'Emergency', 
+    title: 'Emergency Coordination', 
+    description: '24/7 priority support for ambulances and hospital admissions in case of crisis.', 
+    icon: '🚑',
+    features: ['Priority ambulance', 'Hospitalization support', '24/7 SOS desk']
+  },
+  { 
+    id: 's1', 
+    category: 'Social', 
+    title: 'Social Engagement', 
+    description: 'Keeping seniors active and happy through events, companionship, and hobby groups.', 
+    icon: '🎭',
+    features: ['Companion walks', 'Social outings', 'Technology training']
+  },
+  { 
+    id: 'h2', 
+    category: 'Health', 
+    title: 'Doctor Visits', 
+    description: 'General health checkups by certified medical practitioners in the comfort of home.', 
+    icon: '👨‍⚕️',
+    features: ['Biannual checkups', 'Medication reviews', 'Specialist referrals']
+  },
+  { 
+    id: 'c2', 
+    category: 'Concierge', 
+    title: 'Dementia Care', 
+    description: 'Empathetic support for seniors living with memory loss or cognitive decline.', 
+    icon: '🧠',
+    features: ['Memory exercises', 'Safety monitoring', 'Family counseling']
+  },
 ];
 
 const ServiceCatalog: React.FC = () => {
-  const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
+  const [activeCat, setActiveCat] = useState('Health');
+  const phoneNumber = "+919014663217";
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8">
-      {/* Search and Filters */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
-        <div className="w-full md:w-1/2 relative">
-          <input 
-            type="text" 
-            placeholder="Search for services or needs..." 
-            className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-indigo-500 transition-all outline-none"
-          />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2">🔍</span>
-        </div>
-        <div className="flex gap-2 overflow-x-auto w-full md:w-auto">
-          {['All', 'Medical', 'Daily', 'Social'].map(filter => (
-            <button key={filter} className="px-4 py-2 rounded-lg bg-slate-50 text-slate-600 text-sm font-medium hover:bg-slate-100">
-              {filter}
-            </button>
-          ))}
-        </div>
+    <div className="max-w-7xl mx-auto space-y-10">
+      {/* Category Filter */}
+      <div className="flex flex-wrap gap-4 items-center justify-center lg:justify-start">
+        {CATEGORIES.map(cat => (
+          <button
+            key={cat.id}
+            onClick={() => setActiveCat(cat.id)}
+            className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-sm transition-all shadow-sm ${
+              activeCat === cat.id 
+                ? 'bg-[#39D428] text-white shadow-[#39D428]/20' 
+                : 'bg-white text-[#0A2540] border border-slate-100 hover:border-[#39D428]/30'
+            }`}
+          >
+            <span>{cat.icon}</span>
+            {cat.id}
+          </button>
+        ))}
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {SERVICES.map((service) => (
-          <div 
-            key={service.type} 
-            className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer flex flex-col"
-            onClick={() => setSelectedService(service.type)}
-          >
-            <div className="p-6">
-              <div className={`w-14 h-14 rounded-2xl ${service.color} flex items-center justify-center text-2xl mb-4`}>
-                {service.icon}
-              </div>
-              <h3 className="text-xl font-bold text-slate-800 mb-2">{service.title}</h3>
-              <p className="text-slate-500 text-sm mb-6 leading-relaxed">
-                {service.description}
-              </p>
-              <div className="flex items-center justify-between mt-auto">
-                <span className="text-slate-900 font-bold">{service.price}</span>
-                <button className="text-indigo-600 font-semibold text-sm hover:underline">
-                  Book Now →
-                </button>
-              </div>
+      {/* Service Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {DETAILED_SERVICES.filter(s => s.category === activeCat).map((s) => (
+          <div key={s.id} className="bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm hover:shadow-xl transition-all group flex flex-col">
+            <div className="text-4xl mb-6 p-4 bg-slate-50 rounded-2xl inline-block group-hover:bg-[#39D428]/10 group-hover:scale-110 transition-all duration-500">
+              {s.icon}
             </div>
+            <h3 className="text-xl font-black text-[#0A2540] mb-3">{s.title}</h3>
+            <p className="text-slate-500 text-sm font-medium mb-6 leading-relaxed">
+              {s.description}
+            </p>
+            <div className="space-y-2 mb-8 flex-1">
+              {s.features.map((f, idx) => (
+                <div key={idx} className="flex items-center gap-2 text-xs font-bold text-slate-400">
+                  <span className="text-[#39D428]">✓</span> {f}
+                </div>
+              ))}
+            </div>
+            <a 
+              href={`tel:${phoneNumber}`}
+              className="w-full py-4 bg-[#0A2540] text-white rounded-2xl font-black text-xs uppercase tracking-widest text-center hover:bg-[#39D428] transition-all"
+            >
+              Enquire & Book
+            </a>
           </div>
         ))}
       </div>
 
-      {/* Booking Modal (Simplified) */}
-      {selectedService && (
-        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl">
-            <div className="p-8">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-800">Book {selectedService}</h3>
-                  <p className="text-slate-500 text-sm">Fill in the details to request a caregiver</p>
-                </div>
-                <button onClick={() => setSelectedService(null)} className="text-slate-400 hover:text-slate-600 text-2xl">
-                  ×
-                </button>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Preferred Date</label>
-                  <input type="date" className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Frequency</label>
-                  <select className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none">
-                    <option>One-time visit</option>
-                    <option>Daily</option>
-                    <option>Weekly</option>
-                    <option>Bi-weekly</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Additional Notes</label>
-                  <textarea rows={3} placeholder="Tell us about special requirements..." className="w-full p-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none"></textarea>
-                </div>
-                <button 
-                  onClick={() => setSelectedService(null)}
-                  className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold text-lg hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200"
-                >
-                  Confirm Booking Request
-                </button>
-              </div>
-            </div>
-          </div>
+      {/* Newsletter / Contact Promo */}
+      <div className="bg-[#0A2540] rounded-[2.5rem] p-12 text-white flex flex-col lg:flex-row items-center justify-between gap-8 mt-12">
+        <div>
+          <h2 className="text-3xl font-black mb-2">Need a Custom Care Plan?</h2>
+          <p className="text-slate-400 font-medium">Talk to our care managers to design a plan that fits your family's needs perfectly.</p>
         </div>
-      )}
+        <a 
+          href={`tel:${phoneNumber}`} 
+          className="bg-[#39D428] text-white px-10 py-4 rounded-full font-black text-sm hover:scale-105 transition-transform shadow-lg shadow-[#39D428]/20"
+        >
+          Call For Consultation
+        </a>
+      </div>
     </div>
   );
 };
