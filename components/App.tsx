@@ -50,7 +50,7 @@ const App: React.FC = () => {
         <div className="flex-1">
           {renderContent()}
         </div>
-        <FAQ />
+        <FAQ activeTab={activeTab} />
         <Footer />
 
         {/* Floating Support Chat FAB Container */}

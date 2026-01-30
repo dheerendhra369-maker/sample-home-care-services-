@@ -45,21 +45,21 @@ const DIFFERENTIATORS = [
   }
 ];
 
-const VALUES = [
+const CORE_VALUES = [
   {
-    title: "Dignity First",
-    description: "We believe every senior deserves to live with respect and autonomy in their own home environment.",
-    icon: AboutIcons.values
+    title: "Unwavering Dignity",
+    description: "We protect the independence and privacy of our seniors, ensuring they feel respected in every phase of their care.",
+    icon: <svg viewBox="0 0 24 24" width="32" height="32" stroke="#39D428" strokeWidth="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
   },
   {
-    title: "Medical Excellence",
-    description: "Our care protocols are designed by geriatric specialists and delivered by certified professionals.",
-    icon: AboutIcons.mission
+    title: "Clinical Excellence",
+    description: "We don't just provide care; we provide hospital-grade standards. Quality is non-negotiable in our medical protocols.",
+    icon: <svg viewBox="0 0 24 24" width="32" height="32" stroke="#39D428" strokeWidth="2" fill="none"><circle cx="12" cy="12" r="10"/><path d="M12 8l-4 8h8z"/></svg>
   },
   {
-    title: "Compassionate Tech",
-    description: "We bridge the gap between families with smart monitoring that feels human, not clinical.",
-    icon: AboutIcons.vision
+    title: "Family-First Empathy",
+    description: "We treat your loved ones exactly how we would treat our own parents—with warmth, patience, and genuine love.",
+    icon: <svg viewBox="0 0 24 24" width="32" height="32" stroke="#39D428" strokeWidth="2" fill="none"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/></svg>
   }
 ];
 
@@ -277,6 +277,28 @@ const AboutUs: React.FC = () => {
               <h3 className="text-xl font-black text-[#0A2540] mb-4 group-hover:text-[#39D428] transition-colors">{item.title}</h3>
               <p className="text-slate-500 text-sm font-medium leading-relaxed">
                 {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Our Values Section */}
+      <section className="space-y-16 animate-on-scroll opacity-0 translate-y-20 transition-all duration-1000">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl md:text-5xl font-black text-[#0A2540]">Our Core Values</h2>
+          <p className="text-slate-500 font-medium text-lg max-w-2xl mx-auto">The foundational beliefs that drive every action we take for your family.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {CORE_VALUES.map((val, idx) => (
+            <div key={idx} className="bg-white p-12 rounded-[3.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-700 group flex flex-col items-center text-center">
+              <div className="mb-10 w-24 h-24 bg-slate-50 rounded-[2rem] flex items-center justify-center text-[#39D428] group-hover:bg-[#39D428] group-hover:text-white transition-all duration-500 shadow-inner">
+                {val.icon}
+              </div>
+              <h3 className="text-2xl font-black text-[#0A2540] mb-6 group-hover:text-[#39D428] transition-colors">{val.title}</h3>
+              <p className="text-slate-500 font-medium leading-relaxed text-lg">
+                {val.description}
               </p>
             </div>
           ))}

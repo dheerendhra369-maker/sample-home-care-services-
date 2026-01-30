@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 const FreqIcons = {
@@ -13,7 +12,7 @@ interface FAQItem {
   answer: string;
 }
 
-const faqs: FAQItem[] = [
+const GENERAL_FAQS: FAQItem[] = [
   {
     question: "How does the Care Manager model work?",
     answer: "Every family is assigned a dedicated Care Manager who acts as the primary point of contact. They coordinate with nurses, doctors, and concierge staff, ensuring that all health records are updated and family members are kept in the loop 24/7."
@@ -40,13 +39,47 @@ const faqs: FAQItem[] = [
   }
 ];
 
-const FAQ: React.FC = () => {
+const SERVICE_SPECIFIC_FAQS: FAQItem[] = [
+  {
+    question: "What is the difference between Supportive and Clinical home care?",
+    answer: "Supportive care focuses on daily living activities like meal prep and light housekeeping to maintain independence. Clinical care involves medical-grade support provided by licensed professionals, ensuring health needs are managed safely at home."
+  },
+  {
+    question: "Do you offer specialized care for conditions like Dementia or Alzheimer’s?",
+    answer: "Yes. Our Specialized care programs are tailored for seniors living with cognitive challenges. Our caregivers are trained to provide a safe, familiar environment that reduces anxiety and promotes mental well-being for those with specific health diagnoses."
+  },
+  {
+    question: "How do your Emergency home care services work?",
+    answer: "We provide 24/7 Emergency assistance for peace of mind. Whether it’s an unexpected fall or a sudden change in health, our rapid-response team in Vijayawada is ready to step in, ensuring your loved one is never alone during a crisis."
+  },
+  {
+    question: "Can I get help with transportation and errands?",
+    answer: "Absolutely. Our Concierge services go beyond the home. We assist with doctor’s appointments, grocery shopping, and pharmacy trips, making sure seniors stay connected to their community and healthcare providers without the stress of driving."
+  },
+  {
+    question: "Why is Social care important for the elderly?",
+    answer: "Isolation is a major health risk for seniors. Our Social care focuses on companionship, meaningful conversation, and hobby engagement. We don’t just \"watch\" our clients; we build genuine friendships that improve emotional health."
+  },
+  {
+    question: "Can I customize a plan that includes multiple types of care?",
+    answer: "Yes. Most families combine Supportive and Social care for daily life, with Clinical or Specialized care added as needs change. We offer a free consultation in Vijayawada to build a personalized care roadmap that fits your family’s unique situation."
+  }
+];
+
+interface FAQProps {
+  activeTab?: string;
+}
+
+const FAQ: React.FC<FAQProps> = ({ activeTab }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const externalMapLink = "https://www.google.com/maps?ll=16.517961,80.628725&z=14&t=m&hl=en-GB&gl=US&mapclient=embed&q=Nageswara+Rao+Pantulu+Rd+Vijayawada,+Andhra+Pradesh";
 
+  // Use service-specific FAQs if on the services tab, otherwise use general FAQs
+  const currentFaqs = activeTab === 'services' ? SERVICE_SPECIFIC_FAQS : GENERAL_FAQS;
+
   return (
     <section className="mt-20 mb-12 max-w-7xl mx-auto px-6 space-y-24">
-      {/* FAQ Split Section - Rearranged for Desktop */}
+      {/* FAQ Split Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
         {/* Sticky Header Content */}
         <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit space-y-6">
@@ -57,7 +90,10 @@ const FAQ: React.FC = () => {
             Answers For <br className="hidden lg:block"/> Families
           </h2>
           <p className="text-slate-500 font-medium text-lg leading-relaxed">
-            We understand that choosing care for your loved ones is a deeply personal decision. Here is what you need to know about our compassionate approach.
+            {activeTab === 'services' 
+              ? "Specific questions about our nursing, medical equipment, and home care procedures answered by our experts."
+              : "We understand that choosing care for your loved ones is a deeply personal decision. Here is what you need to know about our compassionate approach."
+            }
           </p>
           <div className="pt-4 hidden lg:block">
             <div className="p-6 bg-slate-50 rounded-[2rem] border border-slate-100">
@@ -69,7 +105,7 @@ const FAQ: React.FC = () => {
 
         {/* FAQ List Content */}
         <div className="lg:col-span-8 space-y-4">
-          {faqs.map((faq, index) => (
+          {currentFaqs.map((faq, index) => (
             <div 
               key={index} 
               className={`bg-white rounded-[1.5rem] md:rounded-[2rem] border transition-all duration-300 ${
@@ -105,7 +141,7 @@ const FAQ: React.FC = () => {
         </div>
       </div>
 
-      {/* Location Section - Full Width Design */}
+      {/* Location Section */}
       <div className="bg-white rounded-[3rem] md:rounded-[4rem] border border-slate-100 shadow-2xl shadow-slate-200/50 overflow-hidden flex flex-col lg:flex-row">
         <div className="p-10 md:p-16 lg:w-1/2 flex flex-col justify-center space-y-8">
           <div className="space-y-4">
@@ -161,7 +197,7 @@ const FAQ: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer CTA - Modern Box */}
+      {/* Footer CTA */}
       <div className="p-12 md:p-20 bg-[#0A2540] rounded-[4rem] text-center shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#39D428]/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
         <div className="relative z-10 space-y-8">
