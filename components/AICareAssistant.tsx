@@ -3,7 +3,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { getCareAdvice } from '../services/geminiService';
 import { ChatMessage } from '../types';
 
-const AICareAssistant: React.FC = () => {
+interface AICareAssistantProps {
+  onClose?: () => void;
+}
+
+const AICareAssistant: React.FC<AICareAssistantProps> = ({ onClose }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: '1', role: 'model', text: 'Hello! I am your Care Assistant. How can I help you or your loved ones today?', timestamp: new Date() }
   ]);
@@ -50,42 +54,50 @@ const AICareAssistant: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto h-[calc(100vh-200px)] flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="flex flex-col h-full bg-white shadow-2xl overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+      <div className="p-4 md:p-5 border-b border-slate-100 bg-[#0A2540] text-white flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-[#39D428] rounded-full flex items-center justify-center text-white text-xl">
+          <div className="w-10 h-10 bg-[#39D428] rounded-full flex items-center justify-center text-white text-xl shadow-inner border-2 border-white/10">
             🤖
           </div>
           <div>
-            <h3 className="font-bold text-slate-800">Care Assistant</h3>
-            <p className="text-xs text-emerald-600 font-medium">Online & Ready to Help</p>
+            <h3 className="font-bold text-sm md:text-base leading-tight">Care Assistant</h3>
+            <p className="text-[10px] text-[#39D428] font-black uppercase tracking-widest">Always Online</p>
           </div>
         </div>
-        <button className="text-slate-400 hover:text-slate-600">
-          ⚙️
-        </button>
+        <div className="flex items-center gap-2">
+          {onClose && (
+            <button 
+              onClick={onClose}
+              className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white/10 active:bg-white/20 transition-colors text-white/70 hover:text-white"
+              aria-label="Close Chat"
+            >
+              <span className="text-xl">✕</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Messages */}
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-6 space-y-4 scroll-smooth"
+        className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth bg-[#F8FAFC]"
       >
         {messages.map((msg) => (
           <div 
             key={msg.id} 
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <div className={`max-w-[80%] p-4 rounded-2xl ${
+            <div className={`max-w-[90%] p-3.5 rounded-2xl ${
               msg.role === 'user' 
-                ? 'bg-[#39D428] text-white rounded-br-none' 
-                : 'bg-slate-100 text-slate-800 rounded-bl-none'
+                ? 'bg-[#39D428] text-white rounded-br-none shadow-lg shadow-[#39D428]/20' 
+                : 'bg-white text-slate-800 rounded-bl-none border border-slate-100 shadow-sm'
             }`}>
-              <div className="text-sm prose prose-slate">
-                {msg.text.split('\n').map((line, i) => <p key={i}>{line}</p>)}
+              <div className="text-xs md:text-sm leading-relaxed prose prose-slate max-w-none">
+                {msg.text.split('\n').map((line, i) => <p key={i} className="mb-1 last:mb-0">{line}</p>)}
               </div>
-              <p className={`text-[10px] mt-2 opacity-60 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
+              <p className={`text-[9px] mt-2 opacity-60 font-bold uppercase tracking-tighter ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
                 {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </p>
             </div>
@@ -93,36 +105,36 @@ const AICareAssistant: React.FC = () => {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-slate-100 p-4 rounded-2xl rounded-bl-none animate-pulse flex gap-1">
-              <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
-              <div className="w-2 h-2 bg-slate-400 rounded-full delay-75"></div>
-              <div className="w-2 h-2 bg-slate-400 rounded-full delay-150"></div>
+            <div className="bg-white border border-slate-100 p-3 rounded-2xl rounded-bl-none shadow-sm flex gap-1.5 items-center">
+              <div className="w-1.5 h-1.5 bg-[#39D428] rounded-full animate-bounce"></div>
+              <div className="w-1.5 h-1.5 bg-[#39D428] rounded-full animate-bounce delay-150"></div>
+              <div className="w-1.5 h-1.5 bg-[#39D428] rounded-full animate-bounce delay-300"></div>
             </div>
           </div>
         )}
       </div>
 
       {/* Input */}
-      <div className="p-4 bg-white border-t border-slate-100">
+      <div className="p-4 bg-white border-t border-slate-100 shadow-[0_-4px_10px_rgba(0,0,0,0.02)]">
         <div className="flex gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Type your question here (e.g., 'How to prevent falls?')"
-            className="flex-1 p-3 rounded-xl bg-slate-50 border border-slate-200 text-[#0A2540] font-medium focus:outline-none focus:ring-2 focus:ring-[#39D428] focus:bg-white transition-all placeholder:text-slate-400"
+            placeholder="How can I help today?"
+            className="flex-1 p-3 rounded-xl bg-slate-50 border border-slate-200 text-[#0A2540] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#39D428] focus:bg-white transition-all placeholder:text-slate-400"
           />
           <button
             onClick={handleSend}
             disabled={isLoading || !input.trim()}
-            className="bg-[#39D428] text-white px-6 py-2 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-[#2BA11E] transition-colors disabled:opacity-50"
+            className="bg-[#39D428] text-white px-5 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-[#2BA11E] active:scale-95 transition-all disabled:opacity-50 disabled:scale-100 shadow-lg shadow-[#39D428]/20"
           >
             Send
           </button>
         </div>
-        <p className="text-[10px] text-slate-400 mt-2 text-center">
-          Information provided is for informational purposes. Always consult a medical professional for health emergencies.
+        <p className="text-[9px] text-slate-400 mt-3 text-center font-medium">
+          Personalized advice powered by AI • Not medical diagnosis
         </p>
       </div>
     </div>
